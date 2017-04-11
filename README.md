@@ -14,6 +14,9 @@ which are stored [here](https://github.com/hustlestar/spring-dbunit-mockito-exam
 Has simple validation of data and mostly does dao calls. This layer is covered with [Mockito tests](https://github.com/mockito/mockito), which
 are stored [here](https://github.com/hustlestar/spring-dbunit-mockito-example/tree/master/src/test/java/service).
 
-###Motivation
-I'm new to Mockito and DBUnit so I wanted to create simple example of using these libraries, which could be helpful for those who are striving to get strated
-with them. If you have any questions, I'd be glad to answer, feel free to mail me at z4zolton@gmail.com
+## Installation
+To run this example you need to have Oracle Database, scripts for creating and dropping schema are stored [here](https://github.com/hustlestar/spring-dbunit-mockito-example/tree/master/src/test/resources/scripts) , methods for inserting entries to database are [here](https://github.com/hustlestar/spring-dbunit-mockito-example/tree/master/src/test/java/table_generation). So 
+
+## Motivation
+I'm new to Mockito and DBUnit so I wanted to create simple example of using these libraries, which could be helpful for those who are striving to get strated with them too. Hope my example would be helpful for you. If you have any questions, I'd be glad to answer, feel free to mail me at z4zolton@gmail.com
+
