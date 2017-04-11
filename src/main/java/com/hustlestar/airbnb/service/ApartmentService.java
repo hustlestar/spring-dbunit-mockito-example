@@ -1,6 +1,7 @@
 package com.hustlestar.airbnb.service;
 
 import com.hustlestar.airbnb.domain.Apartment;
+import com.hustlestar.airbnb.domain.criteria.ApartmentCriteria;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface ApartmentService {
 
     List<Apartment> getAvailableApartments();
 
-    List<Apartment> getApartmentByCriteria(String... params);
+    List<Apartment> getApartmentByCriteria(ApartmentCriteria criteria);
 
     List<Apartment> findApartment(String title);
 

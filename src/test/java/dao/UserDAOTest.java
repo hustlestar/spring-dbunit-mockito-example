@@ -29,7 +29,6 @@ public class UserDAOTest {
     @Autowired
     private UserDAO userDAO;
 
-
     @Test
     @DatabaseSetup(value = "/datasets/users/addNewUserTestSMPL.xml", type = DatabaseOperation.CLEAN_INSERT)
     @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "/datasets/users/addNewUserTestEXP.xml")
@@ -45,20 +44,36 @@ public class UserDAOTest {
 
     @Test
     @DatabaseSetup(value = "/datasets/users/getUserTestSMPL.xml", type = DatabaseOperation.CLEAN_INSERT)
-    public void getUserTest() throws Exception{
+    public void getUserTest() throws Exception {
         String login = "admin";
         String pass = "admin";
-        User user = userDAO.getUser(login, pass);
-        Assert.assertEquals("admin@mail.ru" ,user.getEmail());
+        User user = userDAO.loginUser(login, pass);
+        System.out.println(user);
+        Assert.assertEquals("admin@mail.ru", user.getEmail());
     }
 
     @Test
     @DatabaseSetup(value = "/datasets/users/updateUserPasswordTestSMPL.xml", type = DatabaseOperation.CLEAN_INSERT)
     @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "/datasets/users/updateUserPasswordTestEXP.xml")
-    public void updateUserPasswordTest() throws Exception{
+    public void updateUserPasswordTest() throws Exception {
         String login = "second";
+        String oldPassword = "second";
         String newPassword = "testpass";
-        boolean result = userDAO.updateUserPassword(login, newPassword);
+        boolean result = userDAO.updateUserPassword(login, newPassword, oldPassword);
         Assert.assertEquals(true, result);
     }
+
+    @Test
+    @DatabaseSetup(value = "/datasets/users/updateUserInfoSMPL.xml", type = DatabaseOperation.CLEAN_INSERT)
+    @ExpectedDatabase(assertionMode = DatabaseAssertionMode.NON_STRICT, value = "/datasets/users/updateUserInfoEXP.xml")
+    public void updateUserInfoTest() throws Exception {
+        User user = new User();
+        user.setFirstName("dodo");
+        user.setLastName("bingo");
+        user.setLogin("admin");
+        boolean result = userDAO.updateUserInfo(user);
+        Assert.assertEquals(true, result);
+    }
+
+
 }

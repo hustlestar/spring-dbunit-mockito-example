@@ -1,5 +1,6 @@
 package com.hustlestar.airbnb.dao;
 
+import com.hustlestar.airbnb.dao.exc.DAOException;
 import com.hustlestar.airbnb.domain.User;
 
 /**
@@ -7,11 +8,15 @@ import com.hustlestar.airbnb.domain.User;
  */
 public interface UserDAO {
 
-    void addNewUser(User user);
+    boolean addNewUser(User user) throws DAOException;
 
-    User getUser(String login, String password);
+    User loginUser(String login, String password) throws DAOException;
 
-    boolean updateUserPassword(String login, String newPassword);
+    User getUser(String login) throws DAOException;
 
+    boolean updateUserPassword(String login, String newPassword, String oldPassword) throws DAOException;
 
+    boolean createNewPasswordForUser(String login, String newPassword) throws DAOException;
+
+    boolean updateUserInfo(User user) throws DAOException;
 }

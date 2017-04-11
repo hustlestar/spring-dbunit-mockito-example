@@ -6,6 +6,7 @@ import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DatabaseTearDown;
 import com.hustlestar.airbnb.dao.ApartmentDAO;
 import com.hustlestar.airbnb.domain.Apartment;
+import com.hustlestar.airbnb.domain.criteria.ApartmentCriteria;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,8 +24,6 @@ import java.util.List;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"/test-context.xml"})
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, DbUnitTestExecutionListener.class})
-//@Sql(value = "/scripts/database.sql")
-//@DatabaseSetup(value = {"/datasets/countries/countriesSMPL.xml", "/datasets/cities/citiesSMPL.xml"}, type = DatabaseOperation.CLEAN_INSERT)
 @DatabaseTearDown(value = "/datasets/apartments/getAvailableApartmentsTestSMPL.xml", type = DatabaseOperation.DELETE_ALL)
 public class ApartmentDAOTest {
 
@@ -52,9 +51,16 @@ public class ApartmentDAOTest {
     @Test
     @DatabaseSetup(value = "/datasets/apartments/getApartmentByCriteriaTestSMPL.xml", type = DatabaseOperation.CLEAN_INSERT)
     public void getApartmentByCriteriaTest() throws Exception {
-        List<Apartment> apartments = apartmentDAO.getApartmentByCriteria();
+        ApartmentCriteria criteria = new ApartmentCriteria();
+        criteria.setTitle("flat");
+        criteria.setGuests(-5);
+        List<Apartment> apartments = apartmentDAO.getApartmentByCriteria(criteria);
         Assert.assertEquals(3, apartments.size());
-
+        
+        criteria = new ApartmentCriteria();
+        criteria.setCity(-5);
+        apartments = apartmentDAO.getApartmentByCriteria(criteria);
+        Assert.assertEquals(0, apartments.size());
     }
 
 

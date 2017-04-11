@@ -2,10 +2,13 @@ package com.hustlestar.airbnb.service.impl;
 
 import com.hustlestar.airbnb.dao.ApartmentDAO;
 import com.hustlestar.airbnb.domain.Apartment;
+import com.hustlestar.airbnb.domain.criteria.ApartmentCriteria;
 import com.hustlestar.airbnb.service.ApartmentService;
+import com.hustlestar.airbnb.service.utils.Validation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,13 +26,16 @@ public class ApartmentServiceImpl implements ApartmentService {
         return apartmentDAO.getAvailableApartments();
     }
 
-    public List<Apartment> getApartmentByCriteria(String... params) {
+    public List<Apartment> getApartmentByCriteria(ApartmentCriteria criteria) {
 
-        return apartmentDAO.getApartmentByCriteria(params);
+        return apartmentDAO.getApartmentByCriteria(criteria);
     }
 
     public List<Apartment> findApartment(String title) {
-
-        return apartmentDAO.findApartment(title);
+        if (Validation.validateString(title)) {
+            return apartmentDAO.findApartment(title);
+        } else {
+            return Collections.emptyList();
+        }
     }
 }
